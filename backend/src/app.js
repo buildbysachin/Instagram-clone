@@ -8,8 +8,14 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
+
+const allowedOrigin = [
+    "http://localhost:3000",
+    "https://frontend-alpha-five-y0ngtsf2rz.vercel.app"
+]
+
 app.use(cors({
-    origin: true,
+    origin: allowedOrigin,
     credentials: true
 }))
 

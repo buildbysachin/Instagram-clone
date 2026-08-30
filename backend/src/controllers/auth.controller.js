@@ -58,8 +58,9 @@ async function registerUser(req, res) {
 
         res.cookie("token", token, {
             httpOnly: true,
-            sameSite: "lax"
-        })
+            secure: true,        // Production HTTPS ke liye zaroori
+            sameSite: "none",    // Cross-site (Render se Vercel) cookie bhejne ke liye zaroori
+        });
 
         res.status(201).json({
             message: "user created successfully",
@@ -112,10 +113,11 @@ async function loginUser(req, res) {
         role: user.role
     }, process.env.JWT_SECRET)
 
-    res.cookie('token', token, {
+    res.cookie("token", token, {
         httpOnly: true,
-        sameSite: "lax"
-    })
+        secure: true,        // Production HTTPS ke liye zaroori
+        sameSite: "none",    // Cross-site (Render se Vercel) cookie bhejne ke liye zaroori
+    });
 
     res.status(200).json({
         message: "user Loggin successfully",
