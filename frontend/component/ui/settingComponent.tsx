@@ -1,4 +1,4 @@
-import { Logout } from "@/component/logout"
+import { Logout } from "@/component/ui/logout"
 import { ChevronLeft } from "lucide-react";
 import { redirect } from "next/navigation";
 

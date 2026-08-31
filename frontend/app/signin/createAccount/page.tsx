@@ -1,4 +1,4 @@
-import RegisterUser from "@/component/registerUser";
+import RegisterUser from "@/component/auth/registerUser";
 
 const createAccount =()=>{
     return (

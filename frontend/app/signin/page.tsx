@@ -1,4 +1,4 @@
-import SignIn from "@/component/register"
+import SignIn from "@/component/auth/register"
 
 const CreateAccount =()=>{
     return (

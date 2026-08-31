@@ -1,4 +1,4 @@
-import SearchForm from "@/component/search";
+import SearchForm from "@/component/ui/search";
 
 const search = () => {
     return (

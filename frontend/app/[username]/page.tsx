@@ -1,5 +1,5 @@
 "use client"
-import { Logout } from "@/component/logout";
+import { Logout } from "@/component/ui/logout";
 import axios from "axios";
 import { Menu, Settings, X } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";

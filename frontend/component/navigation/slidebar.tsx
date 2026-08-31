@@ -1,22 +1,22 @@
 "use client"
-import { Home, Search } from "lucide-react"
+import { Home, Menu, Search } from "lucide-react"
 import Link from "next/link"
-import Upload from "./upload"
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+import Upload from "../modals/upload"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { useRouter } from "next/navigation"
 
 interface User {
     username?: string;
     profilePic?: string;
 }
 
-const MobileBottomBar = () => {
+const Slidebar = () => {
     const [username, setUsername] = useState("")
-        const [user, setUser] = useState<User | null>(null)
-        let isUnauthorized = false;
-        const [loading, setLoading] = useState<boolean>(true);
-        const router = useRouter()
+    const [user, setUser] = useState<User | null>(null)
+    let isUnauthorized = false;
+    const [loading, setLoading] = useState<boolean>(true);
+    const router = useRouter()
 
     useEffect(() => {
         const fetchItem = async () => {
@@ -45,22 +45,21 @@ const MobileBottomBar = () => {
     }, []);
 
     return (
-        <div
-            className="flex px-4 py-2 w-screen text-white items-center gap-3 justify-between"
-        >
-            <Link
-                href="/"
-                className="font-bold"
-            >
-                <Home/>
+        <div className="flex flex-col px-2 h-screen items-center gap-6 justify-center border-r border-slate-800">
+            <Link href="/" className="font-bold hover:text-slate-300 transition">
+                <Home className="w-6 h-6" />
             </Link>
-            <Link
-                href="/explore"
-                className="font-bold"
-            >
-                <Search/>
+
+            <Link href="/explore" className="font-bold hover:text-slate-300 transition">
+                <Search className="w-6 h-6" />
             </Link>
+
             <Upload />
+
+            <Link href="/setting/edit" className="font-bold hover:text-slate-300 transition">
+                <Menu className="w-6 h-6" />
+            </Link>
+
             <Link href={`/${username || ""}`}>
                 <img
                     src={user?.profilePic || "/placeholder.png"}
@@ -71,4 +70,5 @@ const MobileBottomBar = () => {
         </div>
     )
 }
-export default MobileBottomBar
+
+export default Slidebar;

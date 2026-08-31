@@ -1,4 +1,4 @@
-import Setting from "@/component/settingComponent";
+import Setting from "@/component/ui/settingComponent";
 
 export default function AccountLayout({
     children,
