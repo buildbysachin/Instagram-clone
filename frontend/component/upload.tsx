@@ -10,7 +10,7 @@ const Upload = () => {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [caption, setCaption] = useState("");
     const [isCaptionShow, setIsCaptionShow] = useState(false);
-    const [isUploading, setIsUploading] = useState(false); // 👈 Loading state
+    const [isUploading, setIsUploading] = useState(false);
 
     const handleTypeSelect = (type: "image" | "video" | "reel") => {
         setSelectedType(type);
@@ -23,9 +23,9 @@ const Upload = () => {
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setFile(file);
+        const uploadedFile = e.target.files?.[0];
+        if (uploadedFile) {
+            setFile(uploadedFile);
             setIsCaptionShow(true);
         }
     };
@@ -42,7 +42,6 @@ const Upload = () => {
         formData.append("postType", selectedType);
         formData.append("caption", caption);
 
-        // Click hote hi modal band hoga aur loading start hogi
         setIsCaptionShow(false);
         setIsUploading(true);
 
@@ -58,7 +57,6 @@ const Upload = () => {
         } catch (error) {
             console.error("API ERROR:", error);
         } finally {
-            // Upload complete ya fail hone par loading band
             setIsUploading(false);
             setFile(null);
             setCaption("");
@@ -68,6 +66,7 @@ const Upload = () => {
 
     return (
         <form>
+            {/* Hidden Input */}
             <input
                 type="file"
                 className="hidden"
@@ -75,15 +74,83 @@ const Upload = () => {
                 onChange={handleFileChange}
             />
 
-            <button
-                type="button"
-                onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center justify-center p-3 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition"
-            >
-                <Plus />
-            </button>
+            <div className="relative">
+                <button
+                    type="button"
+                    onClick={() => {
+                        setIsOpen(!isOpen)
+                        console.log("opened");
 
-            {/* Uploading Spinner Overlay / Notification */}
+                    }}
+                    className="flex relative items-center active:bg-blue-400 justify-center p-3 text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 transition"
+                >
+                    <Plus />
+                </button>
+
+                {isOpen && (
+                    <div className="absolute left-0 mt-2 w-44 bg-white border border-gray-200 rounded-xl shadow-xl z-50 flex flex-col p-2 space-y-1">
+                        <button
+                            type="button"
+                            onClick={() => handleTypeSelect("image")}
+                            className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition"
+                        >
+                            <Image className="w-4 h-4 text-emerald-500" />
+                            <span>Image</span>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => handleTypeSelect("video")}
+                            className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition"
+                        >
+                            <Video className="w-4 h-4 text-emerald-500" />
+                            <span>Video</span>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => handleTypeSelect("reel")}
+                            className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition"
+                        >
+                            <Film className="w-4 h-4 text-purple-500" />
+                            <span>Reel</span>
+                        </button>
+                    </div>
+                )}
+
+                {isOpen && (
+                    <div className="md:hidden flex fixed inset-0 z-15 justify-center items-end bottom-22 ">
+                        <div
+                            className="bg-white h-fit w-fit rounded flex gap-3 p-2"
+                        >
+                            <button
+                                type="button"
+                                onClick={() => handleTypeSelect("image")}
+                                className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition"
+                            >
+                                <Image className="w-4 h-4 hover:bg-slate-200 text-emerald-500" />
+                                <span>Image</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handleTypeSelect("video")}
+                                className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition"
+                            >
+                                <Video className="w-4 h-4 text-emerald-500" />
+                                <span>Video</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handleTypeSelect("reel")}
+                                className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition"
+                            >
+                                <Film className="w-4 h-4 text-purple-500" />
+                                <span>Reel</span>
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Uploading Spinner Overlay */}
             {isUploading && (
                 <div className="fixed bottom-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3 z-50 animate-bounce">
                     <Loader2 className="w-5 h-5 animate-spin text-blue-400" />
@@ -91,66 +158,50 @@ const Upload = () => {
                 </div>
             )}
 
-            {isOpen && (
-                <div className="absolute left-0 mt-2 w-44 bg-white border border-gray-200 rounded-xl shadow-xl z-50 flex flex-col p-2 space-y-1">
-                    <button
-                        type="button"
-                        onClick={() => handleTypeSelect("image")}
-                        className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition"
-                    >
-                        <Image className="w-4 h-4 text-emerald-500" />
-                        <span>Image</span>
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => handleTypeSelect("video")}
-                        className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition"
-                    >
-                        <Video className="w-4 h-4 text-emerald-500" />
-                        <span>Video</span>
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => handleTypeSelect("reel")}
-                        className="flex items-center gap-3 px-3 py-2 text-sm text-gray-700 rounded-lg hover:bg-gray-100 transition"
-                    >
-                        <Film className="w-4 h-4 text-purple-500" />
-                        <span>Reel</span>
-                    </button>
-                </div>
-            )}
-
+            {/* Responsive Caption Modal */}
             {isCaptionShow && file && (
-                <div className="bg-black/40 inset-0 fixed flex justify-center items-center z-50 text-white min-h-screen">
-                    <div className="w-min-3/4 bg-white h-3/4 flex rounded-lg overflow-hidden shadow-2xl">
-                        {selectedType === "image" && (
-                            <img
-                                className="w-1/2 object-cover"
-                                src={URL.createObjectURL(file)} 
-                                alt="post" 
-                            />
-                        )}
+                <div className="bg-black/60 inset-0 fixed flex justify-center items-center z-50 p-4">
+                    <div className="bg-white w-full max-w-xl flex flex-col md:flex-row rounded-xl overflow-hidden shadow-2xl max-h-[90vh]">
 
-                        {(selectedType === "video" || selectedType === "reel") && (
-                            <video src={URL.createObjectURL(file)} controls className="w-1/2 object-cover" />
-                        )}
+                        {/* Media Preview (Responsive) */}
+                        <div className="w-full md:w-1/2 bg-black flex items-center justify-center overflow-hidden">
+                            {selectedType === "image" && (
+                                <img
+                                    className="w-full h-full object-contain max-h-[300px] md:max-h-[400px]"
+                                    src={URL.createObjectURL(file)}
+                                    alt="post preview"
+                                />
+                            )}
 
-                        <div className="flex flex-col w-96 gap-3 p-4">
-                            <label className="text-black font-semibold">Caption</label>
-                            <textarea
-                                value={caption}
-                                className="border border-gray-300 p-2 rounded text-black outline-none focus:border-blue-500 resize-none h-32"
-                                onChange={(e) => setCaption(e.target.value)}
-                                placeholder="Write a caption..."
-                            />
+                            {(selectedType === "video" || selectedType === "reel") && (
+                                <video
+                                    src={URL.createObjectURL(file)}
+                                    controls
+                                    className="w-full h-auto object-contain max-h-[350px]"
+                                />
+                            )}
+                        </div>
+
+                        {/* Caption & Post Section */}
+                        <div className="flex flex-col w-full md:w-1/2 gap-3 p-4 justify-between">
+                            <div className="flex flex-col gap-2">
+                                <label className="text-black font-semibold text-sm">Write a Caption</label>
+                                <textarea
+                                    value={caption}
+                                    className="border border-gray-300 p-2 rounded text-black outline-none focus:border-blue-500 resize-none h-28 md:h-32 text-sm"
+                                    onChange={(e) => setCaption(e.target.value)}
+                                    placeholder="What's on your mind?"
+                                />
+                            </div>
                             <button
                                 type="button"
-                                className="bg-red-700 active:bg-red-500 text-white rounded py-2 px-1 font-medium transition mt-auto"
+                                className="bg-red-700 active:bg-red-500 text-white rounded py-2 px-4 font-medium transition w-full"
                                 onClick={handlePost}
                             >
-                                Post
+                                Share Post
                             </button>
                         </div>
+
                     </div>
                 </div>
             )}
