@@ -60,6 +60,7 @@ async function registerUser(req, res) {
             httpOnly: true,
             secure: true,        // Production HTTPS ke liye zaroori
             sameSite: "none",    // Cross-site (Render se Vercel) cookie bhejne ke liye zaroori
+            maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
         res.status(201).json({
@@ -117,6 +118,7 @@ async function loginUser(req, res) {
         httpOnly: true,
         secure: true,        // Production HTTPS ke liye zaroori
         sameSite: "none",    // Cross-site (Render se Vercel) cookie bhejne ke liye zaroori
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
