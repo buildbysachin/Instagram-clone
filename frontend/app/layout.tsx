@@ -35,19 +35,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="h-screen w-screen flex overflow-hidden">
-        <aside className="hidden md:flex h-full">
-          <Slidebar />
-        </aside>
-        <div
-          className="min-h-full flex-1 flex-col overflow-y-auto"
-        >
-          {children}
-        </div>
-
-        <aside className="md:hidden fixed bottom-0 bg-slate-950 border-t flex">
-          <MobileBottomBar/>
-        </aside>
+      <body>
+        {children}
       </body>
     </html>
   );
