@@ -42,7 +42,7 @@ const Slidebar = () => {
         };
 
         fetchItem(); // ✅ फ़ंक्शन को कॉल करना ज़रूरी है
-    }, [username, user]);
+    }, []);
 
     return (
         <div className="flex flex-col px-2 h-screen items-center gap-6 justify-center border-r border-slate-800">

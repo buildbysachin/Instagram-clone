@@ -12,7 +12,7 @@ async function userPost(req, res) {
     console.log(result);
 
     postModel.create({
-        author: req.user.id,
+        author: req.user,
         caption,
         postType,
         media: [

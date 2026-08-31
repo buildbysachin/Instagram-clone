@@ -42,7 +42,7 @@ const MobileBottomBar = () => {
         };
 
         fetchItem(); // ✅ फ़ंक्शन को कॉल करना ज़रूरी है
-    }, [username, user]);
+    }, []);
 
     return (
         <div

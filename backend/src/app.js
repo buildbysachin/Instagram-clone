@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 
 const allowedOrigin = [
-    "http://localhost:3000",
+    "http://localhost:3001",
     "https://frontend-alpha-five-y0ngtsf2rz.vercel.app"
 ]
 
