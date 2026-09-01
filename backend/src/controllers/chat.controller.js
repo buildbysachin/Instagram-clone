@@ -71,4 +71,46 @@ const chatesUser = async (req, res) => {
 
 }
 
-module.exports = { chatUser, chatesUser }
+const message = async (req, res) => {
+    try {
+        const { conversationId, text } = req.body;
+
+        const loggedinId = req.user;
+
+        await messageModel.chatModel.create({
+            conversationId,
+            sender: loggedinId,
+            text
+        })
+
+        return res.status(201).json({
+            message:"message send successfully"
+        })
+    } catch (error) {
+        console.error(error);
+        return res.status(401).json({
+            message:"server error"
+        })
+    }
+}
+
+const messages = async (req, res) =>{
+    try {
+        const {conversationId} = req.params;
+
+        const userMessage = await messageModel.chatModel.find({conversationId})
+
+        return res.status(200).json({
+            message: "messages get successful",
+            userMessage
+        })
+    
+    } catch (error) {
+        console.error(error)
+        return res.status(401).json({
+            message:"server error"
+        })
+    }
+}
+
+module.exports = { chatUser, chatesUser, message, messages }
