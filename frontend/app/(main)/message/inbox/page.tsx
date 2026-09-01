@@ -5,7 +5,7 @@ const Inbox = () => {
     return (
         <>
             <div
-                c  ssName="hidden bg-slate-950 min-h-screen text-white md:flex flex-col justify-center items-center"
+                className="hidden bg-slate-950 min-h-screen text-white md:flex flex-col justify-center items-center"
             >
                 <Send size={70} />
                 <h1
