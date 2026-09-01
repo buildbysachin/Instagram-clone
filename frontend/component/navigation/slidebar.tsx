@@ -1,5 +1,5 @@
 "use client"
-import { Home, Menu, Search } from "lucide-react"
+import { Home, Menu, Search, Send } from "lucide-react"
 import Link from "next/link"
 import Upload from "../modals/upload"
 import { useEffect, useState } from "react"
@@ -58,6 +58,13 @@ const Slidebar = () => {
 
             <Link href="/setting/edit" className="font-bold hover:text-slate-300 transition">
                 <Menu className="w-6 h-6" />
+            </Link>
+
+            <Link
+                href="/message/inbox"
+                className="font-bold"
+            >
+                <Send/>
             </Link>
 
             <Link href={`/${username || ""}`}>

@@ -476,12 +476,10 @@ async function chackUserFollowList(req, res) {
 }
 
 async function getMyUser(req, res) {
-    const token = req.cookies?.token;
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    const loggedInUserId = decoded.id
+    const loggedInUserId = req.user;
 
-    const user = await userModel.findById(loggedInUserId)
+    const user = await userModel.findById(loggedInUserId).populate("following")
 
     res.status(200).json({
         loggedInUserId,

@@ -1,5 +1,5 @@
 "use client"
-import { Home, Search } from "lucide-react"
+import { Home, MessageCircle, MessageCircleCheckIcon, Search, Send, Share2 } from "lucide-react"
 import Link from "next/link"
 import Upload from "../modals/upload"
 import { useEffect, useState } from "react";
@@ -54,13 +54,23 @@ const MobileBottomBar = () => {
             >
                 <Home/>
             </Link>
+
             <Link
                 href="/explore"
                 className="font-bold"
             >
                 <Search/>
             </Link>
+
             <Upload />
+
+            <Link
+                href="/message/inbox"
+                className="font-bold"
+            >
+                <Send/>
+            </Link>
+
             <Link href={`/${username || ""}`}>
                 <img
                     src={user?.profilePic || "/placeholder.png"}
