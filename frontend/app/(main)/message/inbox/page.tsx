@@ -3,7 +3,7 @@ import { Send } from "lucide-react"
 
 const Inbox = () => {
     return (
-        <>
+        <div>
             <div
                 className="hidden bg-slate-950 min-h-screen text-white md:flex flex-col justify-center items-center"
             >
@@ -16,11 +16,11 @@ const Inbox = () => {
             </div>
 
             <div
-            className="md:hidden"
+                className="md:hidden"
             >
-                <MessageUsers/>
+                <MessageUsers />
             </div>
-        </>
+        </div>
     )
 }
 export default Inbox;

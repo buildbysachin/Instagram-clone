@@ -5,9 +5,10 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface chatUser {
-    profilePic?: string,
-    username?: string,
-    fullName?: string
+    profilePic?: string;
+    username?: string;
+    fullName?: string;
+    _id?: string;
 }
 
 interface messageUser {
@@ -21,6 +22,7 @@ const MessageForm = () => {
     const [chat, setChat] = useState("")
     const [isChat, setIsChat] = useState(false)
     const [message, setMessage] = useState<messageUser[]>([])
+    const [loggedInId, setLoggedInId] = useState("")
 
     const handleClicked = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -42,6 +44,7 @@ const MessageForm = () => {
                     { withCredentials: true }
                 )
                 setotherPerson(res?.data?.otherPerson);
+                setLoggedInId(res?.data?.loggedin)
             } catch (error) {
                 console.error(error)
             }
@@ -58,7 +61,9 @@ const MessageForm = () => {
                 console.error(error)
             }
         }
-        fetchedItem()
+        if (conversationId) {
+            fetchedItem();
+        }
     }, [handleClicked])
 
     return (
@@ -84,16 +89,23 @@ const MessageForm = () => {
                 )}
 
                 <div
-                className="flex flex-col gap-2"
+                    className="flex flex-col gap-2"
                 >
                     {message.map((elem: any) => {
                         return (
                             <div
                                 key={elem._id}
                             >
-                                <p
-                                    className="bg-red-600 w-fit text-white p-2 rounded"
-                                >{elem.text}</p>
+                                {(elem.sender === otherPerson?._id) && (
+                                    <p
+                                        className="bg-white w-fit text-black p-2 rounded"
+                                    >{elem.text}</p>
+                                )}
+                                {(elem.sender === loggedInId) && (
+                                    <p
+                                        className="bg-red-600 ml-auto w-fit text-white p-2 rounded"
+                                    >{elem.text}</p>
+                                )}
                             </div>
                         )
                     })}

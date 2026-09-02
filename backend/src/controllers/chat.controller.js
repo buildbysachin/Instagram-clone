@@ -60,7 +60,8 @@ const chatesUser = async (req, res) => {
 
         return res.status(200).json({
             message: "your chat get successful",
-            otherPerson
+            otherPerson,
+            loggedin
         })
     } catch (error) {
         console.error(error)
