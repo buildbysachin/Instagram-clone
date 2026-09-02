@@ -169,6 +169,21 @@ const UserProfile = () => {
         }
     }
 
+    const handleMessage = async (messageUser: string) => {
+
+        const resChat = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/chat/chats`,
+            { messageUser },
+            { withCredentials: true }
+        )
+
+        const conservationId = resChat?.data?.user?._id
+        console.log(conservationId);
+
+
+        router.push(`/message/t/${conservationId}`)
+
+    }
+
     if (loading) {
         return (
             <div className="bg-slate-950 min-h-screen text-slate-100 flex items-center justify-center">
@@ -180,14 +195,14 @@ const UserProfile = () => {
     return (
         <div className="bg-slate-950 min-h-screen text-slate-100 pl-0 md:pl-20 pb-20 md:pb-10 w-full overflow-x-hidden">
             <header
-            className="md:hidden px-2 border-b border-slate-700">
+                className="md:hidden px-2 border-b border-slate-700">
                 <button
-                className="py-2"
-                onClick={()=>{
-                    router.push('/setting')
-                }}
+                    className="py-2"
+                    onClick={() => {
+                        router.push('/setting')
+                    }}
                 >
-                    <Menu/>
+                    <Menu />
                 </button>
             </header>
             <div className="flex flex-col items-center pt-8 md:pt-16 px-4 max-w-4xl mx-auto">
@@ -413,9 +428,9 @@ const UserProfile = () => {
                 {isOwner && (
                     <div className="flex gap-3 sm:gap-4 text-xs sm:text-sm mt-4 sm:mt-6 font-semibold w-full justify-center sm:justify-start">
                         <button className="flex-1 sm:flex-initial rounded-lg bg-slate-800 hover:bg-slate-700 px-4 sm:px-8 py-2.5 transition duration-200"
-                        onClick={()=>{
-                            router.push("/setting/edit")
-                        }}
+                            onClick={() => {
+                                router.push("/setting/edit")
+                            }}
                         >
                             Edit Profile
                         </button>
@@ -427,28 +442,47 @@ const UserProfile = () => {
 
                 {!isOwner && (
                     <div className="flex gap-3 sm:gap-4 text-xs sm:text-sm mt-4 sm:mt-6 font-semibold w-full justify-center sm:justify-start">
-                        {isFollowing && (
+                        <div>
+                            {isFollowing && (
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        handleFollow(username)
+                                    }}
+                                    className="flex-1 sm:flex-initial rounded-lg bg-slate-800 hover:bg-slate-700 px-6 sm:px-10 active:scale-95 py-2.5 transition duration-200">
+                                    Following
+                                </button>
+                            )}
+                            {!isFollowing && (
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        handleFollow(username)
+                                    }}
+                                    className="flex-1 sm:flex-initial rounded-lg bg-green-700 hover:bg-green-600 active:scale-95 px-6 sm:px-10 py-2.5 transition duration-200">
+                                    Follow
+                                </button>
+                            )}
+                        </div>
+                        <div>
                             <button
-                                type="button"
-                                onClick={() => {
-                                    handleFollow(username)
-                                }}
-                                className="flex-1 sm:flex-initial rounded-lg bg-slate-800 hover:bg-slate-700 px-6 sm:px-10 active:scale-95 py-2.5 transition duration-200">
-                                Following
+                            type="button"
+                            className="bg-white text-black py-2 hover:bg-slate-300 text-sm px-5 rounded"
+                            onClick={()=>{
+                                if(user?._id){
+                                    handleMessage(user._id)
+                                }
+                            }}
+                            >
+                                message
                             </button>
-                        )}
-                        {!isFollowing && (
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    handleFollow(username)
-                                }}
-                                className="flex-1 sm:flex-initial rounded-lg bg-green-700 hover:bg-green-600 active:scale-95 px-6 sm:px-10 py-2.5 transition duration-200">
-                                Follow
-                            </button>
-                        )}
+                        </div>
                     </div>
                 )}
+
+                <div className="flex-1">
+
+                </div>
             </div>
 
             {/* Posts Grid */}
